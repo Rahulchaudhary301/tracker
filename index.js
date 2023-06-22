@@ -1,6 +1,6 @@
 const express=require('express')
 const app=express()
-const route=require('../src/Router/Route')
+const route=require('./src/Router/Route')
 const cors=require('cors')
 
 
