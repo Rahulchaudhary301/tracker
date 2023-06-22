@@ -25,7 +25,7 @@ const SrcbeData = async (req, res) => {
     const Data2 = [];
     const Data3 = []
     const BrowerOpenPromise = puppeteer.launch({
-      headless:true,
+      headless:false,
       args:[
       "--disable-setuid-sandbox",
       
