@@ -25,6 +25,7 @@ const SrcbeData = async (req, res) => {
     const Data2 = [];
     const Data3 = []
     const BrowerOpenPromise = puppeteer.launch({
+      headless:true,
       args:[
       "--disable-setuid-sandbox",
       
@@ -174,20 +175,20 @@ const SrcbeData = async (req, res) => {
 
 
           if (Data1[0].Name != "") {
-            console.log({ From1: Data1, total: Data1.length })
+          //  console.log({ From1: Data1, total: Data1.length })
             
             return res.status(201).send({ status: true, data: Data1 })
           }
 
 
           if (Data2[0].Name != "") {
-            console.log({ From2: Data2, total: Data2.length })
+           // console.log({ From2: Data2, total: Data2.length })
             // res.send({msg:"fetch sucessfully",data:Data2})
             return res.status(201).send({ status: true, data: Data2 })
           }
 
           if (Data3[0].Name != "") {
-            console.log({ From3: Data3, total: Data3.length })
+            //console.log({ From3: Data3, total: Data3.length })
 
             // let sortData= Data3.sort((a, b) => a.price - b.price);
 
