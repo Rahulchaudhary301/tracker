@@ -246,7 +246,16 @@ const AmonZone = async (req, res) => {
     const Data1 = [];
     const Data2 = [];
     const Data3 = []
-    const BrowerOpenPromise = puppeteer.launch({ headless: true });
+    const BrowerOpenPromise = puppeteer.launch({ 
+      args:[
+        "--disable-setuid-sandbox",
+        
+            "--no-sandbox",
+            "--single-process",
+            "--no-zygote"
+        ],
+        executablePath:process.env.Node_ENV==='production'? process.env.PUPPETEER_EXECUTABLE_PATH :puppeteer.executablePath()
+     });
     let page;
 
 
@@ -690,7 +699,16 @@ const Ebay = async (req, res) => {
     const Data1 = [];
     const Data2 = [];
     const Data3 = []
-    const BrowerOpenPromise = puppeteer.launch({ headless: true });
+    const BrowerOpenPromise = puppeteer.launch({
+      args:[
+        "--disable-setuid-sandbox",
+        
+            "--no-sandbox",
+            "--single-process",
+            "--no-zygote"
+        ],
+        executablePath:process.env.Node_ENV==='production'? process.env.PUPPETEER_EXECUTABLE_PATH :puppeteer.executablePath()
+    });
     let page;
 
 
