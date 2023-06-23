@@ -24,75 +24,142 @@ const SrcbeData = async (req, res) => {
     const Data1 = [];
     const Data2 = [];
     const Data3 = []
-    const BrowerOpenPromise = puppeteer.launch({
+
+
+
+
+
+
+    // const BrowerOpenPromise = puppeteer.launch({
       
-      args:[
-      "--disable-setuid-sandbox",
+    //   args:[
+    //   "--disable-setuid-sandbox",
       
-          "--no-sandbox",
-          "--single-process",
-          "--no-zygote"
+    //       "--no-sandbox",
+    //       "--single-process",
+    //       "--no-zygote"
+    //   ],
+    //   executablePath:process.env.Node_ENV==='production'? process.env.PUPPETEER_EXECUTABLE_PATH :puppeteer.executablePath()
+    // });
+    // let page;
+
+    // BrowerOpenPromise.then((browser) => {
+    //   return browser.pages();
+    // })
+    //   .then((browserPage) => {
+    //     page = browserPage[0];
+    //     page.setViewport({ width: 1080, height: 1024 });
+    //     return page.goto("https://www.google.com/");
+    //   })
+    //   .then(() => {
+    //     let data = page.waitForSelector("textarea", { visible: true });
+    //     return data;
+    //   })
+    //   .then(() => {
+    //     // console.log('Reached google home page')
+    //     let keyWillSentPromise = page.type("textarea", "flipcart");
+    //     return keyWillSentPromise;
+    //   })
+    //   .then(() => {
+    //     return page.keyboard.press("Enter");
+    //   })
+    //   .then(() => {
+    //     let data = page.waitForSelector("h3.LC20lb.MBeuO.DKV0Md", {
+    //          visible: true,
+    //     });
+    //     return data;
+    //   })
+    //   .then(() => {
+    //     return page.click("h3.LC20lb.MBeuO.DKV0Md" );
+    //   })
+    //   .then(() => {
+    //     let data = page.waitForSelector("._2KpZ6l._2doB4z", { visible: true });
+    //     return data;
+    //   })
+    //   .then(() => {
+    //     return page.click("._2KpZ6l._2doB4z");
+    //   })
+
+    //   .then(() => {
+    //     // console.log('Reached google home page')
+    //     let keyWillSentPromise = page.waitForSelector("._3704LK", {
+    //       visible: true,
+    //     });
+    //     return keyWillSentPromise;
+    //   })
+    //   .then(() => {
+    //     // console.log('Reached google home page')
+    //     let keyWillSentPromise = page.type("._3704LK", `${name}`);
+    //     return keyWillSentPromise;
+    //   })
+
+    //   .then(() => {
+    //     return page.keyboard.press("Enter");
+    //   })
+
+
+
+ 
+    const browser = await puppeteer.launch({
+       
+      args: [
+        "--disable-setuid-sandbox",
+        "--no-sandbox",
+        "--single-process",
+        "--no-zygote",
       ],
-      executablePath:process.env.Node_ENV==='production'? process.env.PUPPETEER_EXECUTABLE_PATH :puppeteer.executablePath()
+      executablePath:
+        process.env.NODE_ENV === "production"
+          ? process.env.PUPPETEER_EXECUTABLE_PATH
+          : puppeteer.executablePath(),
     });
-    let page;
 
-    BrowerOpenPromise.then((browser) => {
-      return browser.pages();
-    })
-      .then((browserPage) => {
-        page = browserPage[0];
-        page.setViewport({ width: 1080, height: 1024 });
-        return page.goto("https://www.google.com/");
-      })
-      .then(() => {
-        let data = page.waitForSelector("textarea", { visible: true });
-        return data;
-      })
-      .then(() => {
-        // console.log('Reached google home page')
-        let keyWillSentPromise = page.type("textarea", "flipcart");
-        return keyWillSentPromise;
-      })
-      .then(() => {
-        return page.keyboard.press("Enter");
-      })
-      .then(() => {
-        let data = page.waitForSelector("h3.LC20lb.MBeuO.DKV0Md", {
-             visible: true,
-        });
-        return data;
-      })
-      .then(() => {
-        return page.click("h3.LC20lb.MBeuO.DKV0Md" );
-      })
-      .then(() => {
-        let data = page.waitForSelector("._2KpZ6l._2doB4z", { visible: true });
-        return data;
-      })
-      .then(() => {
-        return page.click("._2KpZ6l._2doB4z");
-      })
+    
+      const page = await browser.newPage();
+  
+      await page.goto("https://www.flipkart.com/");
+  
+      // Set screen size
+      await page.setViewport({ width: 1080, height: 1024 });
+  
+      // Type into search box
+      await page.type("._3704LK", `${name}`);
+  
+      await page.keyboard.press("Enter");
 
-      .then(() => {
-        // console.log('Reached google home page')
-        let keyWillSentPromise = page.waitForSelector("._3704LK", {
-          visible: true,
-        });
-        return keyWillSentPromise;
-      })
-      .then(() => {
-        // console.log('Reached google home page')
-        let keyWillSentPromise = page.type("._3704LK", `${name}`);
-        return keyWillSentPromise;
-      })
+      await page.click("._2KpZ6l._2doB4z");
 
-      .then(() => {
-        return page.keyboard.press("Enter");
-      })
+      // Wait and click on first result
+      await page.click("._3704LK");
 
-      .then(async () => {
-        const url = await page.url();
+      // const searchResultSelector = "._3704LK";
+
+      // await page.waitForSelector(searchResultSelector);
+      // await page.click(searchResultSelector);
+  
+      const url =  page.url()
+      
+
+
+
+    // await page.close();
+
+
+
+
+      // // Locate the full title with a unique string
+      // const textSelector = await page.waitForSelector(
+      //   "text/Customize and automate"
+      // );
+      // const fullTitle = await textSelector.evaluate((el) => el.textContent);
+  
+      // // Print the full title
+      // const logStatement = `The title of this blog post is ${fullTitle}`;
+      // console.log(logStatement);
+
+       //  res.status(200).send({ status: true, data:url})
+   
+  
 
         request(url, function (error, response, html) {
           if (error) {
@@ -199,12 +266,15 @@ const SrcbeData = async (req, res) => {
            res.status(200).send({ status: true, data:[1]})
 
         };
-      });
+      
   }
 
 
-  catch (err) {
-    res.status(500).send({ status: false, msg: err.message })
+  catch (e) {
+    console.error(e);
+    res.send(`Something went wrong while running Puppeteer: ${e}`);
+  } finally {
+    await browser.close();
   }
 
 }

@@ -79,6 +79,8 @@ const Products = async (req, res) => {
 
     const scrapeLogic = async (req,res) => {
       console.log("rahul")
+
+      
       const browser = await puppeteer.launch({
        
         args: [
