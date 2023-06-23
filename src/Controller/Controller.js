@@ -162,6 +162,7 @@ const SrcbeData = async (req, res) => {
   
 
         request(url, function (error, response, html) {
+          console.log(url)
           if (error) {
             console.log(error);
           }
@@ -272,9 +273,10 @@ const SrcbeData = async (req, res) => {
 
   catch (e) {
     console.error(e);
-    res.send(`Something went wrong while running Puppeteer: ${e}`);
+   // res.send();
+    res.status(500).send({ status: false, msg: `Something went wrong while running Puppeteer: ${e}` })
   } finally {
-    await browser.close();
+   // await browser.close();
   }
 
 }
