@@ -142,7 +142,7 @@ const SrcbeData = async (req, res) => {
 
 
 
-    // await page.close();
+     await page.close();
 
 
 
@@ -168,7 +168,7 @@ const SrcbeData = async (req, res) => {
           handle(html);
         });
 
-        await page.close();
+       // await page.close();
         // await BrowerOpenPromise.close();
 
 
