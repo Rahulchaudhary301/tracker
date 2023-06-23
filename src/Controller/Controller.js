@@ -309,7 +309,6 @@ const AmonZone = async (req, res) => {
   try {
 
 
-    console.log(rahul)
 
     const name = req.body.headers.name;
 
@@ -319,83 +318,130 @@ const AmonZone = async (req, res) => {
     const Data1 = [];
     const Data2 = [];
     const Data3 = []
-    const BrowerOpenPromise = puppeteer.launch({ 
-      args:[
-        "--disable-setuid-sandbox",
+
+
+
+
+
+    // const BrowerOpenPromise = puppeteer.launch({ 
+    //   args:[
+    //     "--disable-setuid-sandbox",
         
-            "--no-sandbox",
-            "--single-process",
-            "--no-zygote"
-        ],
-        executablePath:process.env.Node_ENV==='production'? process.env.PUPPETEER_EXECUTABLE_PATH :puppeteer.executablePath()
-     });
-    let page;
+    //         "--no-sandbox",
+    //         "--single-process",
+    //         "--no-zygote"
+    //     ],
+    //     executablePath:process.env.Node_ENV==='production'? process.env.PUPPETEER_EXECUTABLE_PATH :puppeteer.executablePath()
+    //  });
+    // let page;
 
 
 
-    BrowerOpenPromise.then((browser) => {
-      return browser.pages();
-    })
-      .then((browserPage) => {
-        page = browserPage[0];
-        page.setViewport({ width: 1080, height: 1024 });
-        return page.goto("https://www.google.com/");
-      })
-      .then(() => {
-        let data = page.waitForSelector("textarea", { visible: true });
-        return data;
-      })
-      .then(() => {
-        // console.log('Reached google home page')
-        let keyWillSentPromise = page.type("textarea", "amazone");
-        return keyWillSentPromise;
-      })
-      .then(() => {
-        return page.keyboard.press("Enter");
-      })
-      .then(() => {
-        let data = page.waitForSelector("h3.LC20lb.MBeuO.DKV0Md", {
-          visible: true,
-        });
-        return data;
-      })
-      .then(() => {
-        return page.click("h3.LC20lb.MBeuO.DKV0Md");
-      })
-      //   .then(() => {
-      //     let data = page.waitForSelector("#twotabsearchtextbox", { visible: true });
-      //     return data;
-      //   })
-      //   .then(() => {
-      //     return page.click("#twotabsearchtextbox");
-      //   })
+    // BrowerOpenPromise.then((browser) => {
+    //   return browser.pages();
+    // })
+    //   .then((browserPage) => {
+    //     page = browserPage[0];
+    //     page.setViewport({ width: 1080, height: 1024 });
+    //     return page.goto("https://www.google.com/");
+    //   })
+    //   .then(() => {
+    //     let data = page.waitForSelector("textarea", { visible: true });
+    //     return data;
+    //   })
+    //   .then(() => {
+    //     // console.log('Reached google home page')
+    //     let keyWillSentPromise = page.type("textarea", "amazone");
+    //     return keyWillSentPromise;
+    //   })
+    //   .then(() => {
+    //     return page.keyboard.press("Enter");
+    //   })
+    //   .then(() => {
+    //     let data = page.waitForSelector("h3.LC20lb.MBeuO.DKV0Md", {
+    //       visible: true,
+    //     });
+    //     return data;
+    //   })
+    //   .then(() => {
+    //     return page.click("h3.LC20lb.MBeuO.DKV0Md");
+    //   })
+    //   //   .then(() => {
+    //   //     let data = page.waitForSelector("#twotabsearchtextbox", { visible: true });
+    //   //     return data;
+    //   //   })
+    //   //   .then(() => {
+    //   //     return page.click("#twotabsearchtextbox");
+    //   //   })
 
-      .then(() => {
-        // console.log('Reached google home page')
-        let keyWillSentPromise = page.waitForSelector("#twotabsearchtextbox", {
-          visible: true,
-        });
-        return keyWillSentPromise;
-      })
-      .then(() => {
-        // console.log('Reached google home page')
-        let keyWillSentPromise = page.type("#twotabsearchtextbox", `${name}`);
-        return keyWillSentPromise;
-      })
+    //   .then(() => {
+    //     // console.log('Reached google home page')
+    //     let keyWillSentPromise = page.waitForSelector("#twotabsearchtextbox", {
+    //       visible: true,
+    //     });
+    //     return keyWillSentPromise;
+    //   })
+    //   .then(() => {
+    //     // console.log('Reached google home page')
+    //     let keyWillSentPromise = page.type("#twotabsearchtextbox", `${name}`);
+    //     return keyWillSentPromise;
+    //   })
 
-      .then(() => {
-        return page.keyboard.press("Enter");
+    //   .then(() => {
+    //     return page.keyboard.press("Enter");
 
-      })
-      .then(() => {
-        let data = page.waitForSelector("#twotabsearchtextbox", { visible: true });
-        return data;
-      })
+    //   })
+    //   .then(() => {
+    //     let data = page.waitForSelector("#twotabsearchtextbox", { visible: true });
+    //     return data;
+    //   })
 
 
-      .then(async () => {
 
-        const url = await page.url();
+
+
+
+    const browser = await puppeteer.launch({
+       
+      args: [
+        "--disable-setuid-sandbox",
+        "--no-sandbox",
+        "--single-process",
+        "--no-zygote",
+      ],
+      executablePath:
+        process.env.NODE_ENV === "production"
+          ? process.env.PUPPETEER_EXECUTABLE_PATH
+          : puppeteer.executablePath(),
+    });
+
+    
+      const page = await browser.newPage();
+  
+      await page.goto("https://www.amazon.in/");
+  
+      // Set screen size
+      await page.setViewport({ width: 1080, height: 1024 });
+  
+      // Type into search box
+      await page.type("#twotabsearchtextbox", `${name}`);
+  
+      await page.keyboard.press("Enter");
+
+     // await page.click("._2KpZ6l._2doB4z");
+
+      // Wait and click on first result
+      await page.click("#twotabsearchtextbox");
+
+      // const searchResultSelector = "._3704LK";
+
+      // await page.waitForSelector(searchResultSelector);
+      // await page.click(searchResultSelector);
+  
+      const url =  page.url()
+
+      await page.close();
+
 
         //console.log(url)
 
@@ -412,7 +458,7 @@ const AmonZone = async (req, res) => {
 
         });
 
-        await page.close();
+       // await page.close();
         // await BrowerOpenPromise.close();
 
 
@@ -485,7 +531,7 @@ const AmonZone = async (req, res) => {
 
 
           if (Data1[0].Name != "") {
-            console.log({ From1: Data1, total: Data1.length })
+          //  console.log({ From1: Data1, total: Data1.length })
 
             //res.send({msg:"fetch sucessfully",data:Data1})
             return res.status(201).send({ status: true, data: Data1 })
@@ -493,27 +539,30 @@ const AmonZone = async (req, res) => {
 
 
           if (Data2[0].Name != "") {
-            console.log({ From2: Data2, total: Data2.length })
+          //  console.log({ From2: Data2, total: Data2.length })
             // res.send({msg:"fetch sucessfully",data:Data2})
             res.status(201).send({ status: true, data: Data2 })
           }
 
           if (Data3[0].Name != "") {
-            console.log({ From3: Data3, total: Data3.length })
+           // console.log({ From3: Data3, total: Data3.length })
             res.status(201).send({ status: true, data: Data3 })
             //res.send({msg:"fetch sucessfully",data:Data3})
           }
 
           return res.status(201).send({ status: true, data: [1] })
         };
-      });
+      
   }
 
 
-  catch (err) {
-    res.status(500).send({ status: false, msg: err.message })
+  catch (e) {
+    console.error(e);
+   // res.send();
+    res.status(500).send({ status: false, msg: `Something went wrong while running Puppeteer: ${e}` })
+  } finally {
+   // await browser.close();
   }
-
 
 
 }
