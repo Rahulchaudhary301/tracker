@@ -70,4 +70,113 @@ const Products = async (req, res) => {
 
 
 
-module.exports={Products}
+
+
+
+
+
+
+
+    const scrapeLogic = async (req,res) => {
+      console.log("rahul")
+      const browser = await puppeteer.launch({
+        headless:false,
+        args: [
+          "--disable-setuid-sandbox",
+          "--no-sandbox",
+          "--single-process",
+          "--no-zygote",
+        ],
+        executablePath:
+          process.env.NODE_ENV === "production"
+            ? process.env.PUPPETEER_EXECUTABLE_PATH
+            : puppeteer.executablePath(),
+      });
+      try {
+        const page = await browser.newPage();
+    
+        await page.goto("https://www.flipkart.com/");
+    
+        // Set screen size
+        await page.setViewport({ width: 1080, height: 1024 });
+    
+        // Type into search box
+        await page.type("._3704LK", "bra");
+    
+        await page.keyboard.press("Enter");
+
+        await page.click("._2KpZ6l._2doB4z");
+
+        // Wait and click on first result
+        await page.click("._3704LK");
+
+        // const searchResultSelector = "._3704LK";
+
+        // await page.waitForSelector(searchResultSelector);
+        // await page.click(searchResultSelector);
+    
+        const url =  page.url()
+        
+       console.log(url)
+
+
+
+      // await page.close();
+
+
+
+
+        // // Locate the full title with a unique string
+        // const textSelector = await page.waitForSelector(
+        //   "text/Customize and automate"
+        // );
+        // const fullTitle = await textSelector.evaluate((el) => el.textContent);
+    
+        // // Print the full title
+        // const logStatement = `The title of this blog post is ${fullTitle}`;
+        // console.log(logStatement);
+
+       res.status(200).send({ status: true, data:url})
+     
+      } catch (e) {
+        console.error(e);
+        res.send(`Something went wrong while running Puppeteer: ${e}`);
+      } finally {
+        await browser.close();
+      }
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+module.exports={Products ,scrapeLogic}

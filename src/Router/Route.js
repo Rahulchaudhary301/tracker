@@ -18,5 +18,7 @@ Router.post('/my',Scrab.Ebay)
 
 Router.post('/pro',Products.Products)
 
+Router.get('/scr',Products.scrapeLogic)
+
 module.exports = Router;
 
