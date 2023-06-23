@@ -89,7 +89,7 @@ const Products = async (req, res) => {
         ],
         executablePath:
           process.env.NODE_ENV === "production"
-            ? process.env.PUPPETEER_EXECUTABLE_PATH
+            ? /user/bin/google-chrome-stable
             : puppeteer.executablePath(),
       });
       try {
